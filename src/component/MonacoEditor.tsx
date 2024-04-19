@@ -6,16 +6,20 @@ import {
 } from "react";
 import Editor from "@monaco-editor/react";
 
-import { EditorOptions, GenerateCompilerOptions } from "../utils/MonacoEditorOptions";
+import { MonacoEditorProps, EditorOptions, GenerateCompilerOptions } from "../utils/MonacoEditorOptions";
 import { ExecuteCode } from "../utils/MonacoEditorExecute";
 import styles from "../css/MonacoEditor.module.css";
 
-const MonacoEditor: FunctionComponent = () => {
+const MonacoEditor: FunctionComponent<MonacoEditorProps> = ({
+    code = "",
+    darkMode = false,
+    strictMode = false
+}) => {
     const monacoRef = useRef<any>(null);
-    const [code, setCode] = useState("console.log('Hello World!')");
-    const [strictMode, setStrictMode] = useState(true);
+    const [editorCode, setEditorCode] = useState(code);
+    const [editorDarkMode, setEditorDarkMode] = useState(darkMode);
+    const [editorStrictMode, setEditorStrictMode] = useState(strictMode);
     const [consoleOutput, SetConsoleOutput] = useState<string[]>([]);
-    const [darkMode, setDarkMode] = useState(true);
 
     const setEditorCompileOptions = () => {
         if (monacoRef) {
@@ -46,17 +50,17 @@ const MonacoEditor: FunctionComponent = () => {
                     <div className={styles.padded}>
                         <input
                             type="checkbox"
-                            checked={darkMode}
-                            onChange={() => setDarkMode(!darkMode)}
+                            checked={editorDarkMode}
+                            onChange={() => setEditorDarkMode(!editorDarkMode)}
                             className={styles.checkbox}
                         />
-                        <span>&nbsp;Editor Dark Mode</span>
+                        <span>&nbsp;Dark Mode</span>
                     </div>
                     <div className={styles.padded}>
                         <input
                             type="checkbox"
-                            checked={strictMode}
-                            onChange={() => setStrictMode(!strictMode)}
+                            checked={editorStrictMode}
+                            onChange={() => setEditorStrictMode(!editorStrictMode)}
                             className={styles.checkbox}
                         />
                         <span>&nbsp;Strict IntelliSense Mode</span>
@@ -64,17 +68,17 @@ const MonacoEditor: FunctionComponent = () => {
                     <div className={styles.padded}>
                         <Editor
                             height="100vh"
-                            theme={darkMode ? "vs-dark" : "vs"}
+                            theme={editorDarkMode ? "vs-dark" : "vs"}
                             options={EditorOptions}
                             language="typescript"
-                            value={code}
+                            value={editorCode}
                             onMount={(editor, monaco) => {
                                 if (monaco) {
                                     monacoRef.current = monaco;
                                 }
                             }}
                             onChange={(value, e) => {
-                                setCode(value ?? "");
+                                setEditorCode(value ?? "");
                             }}
                         />
                     </div>
@@ -82,7 +86,7 @@ const MonacoEditor: FunctionComponent = () => {
                 <div className={styles.padded}>
                     <div className={styles.padded}>
                         <button
-                            onClick={async (e) => SetConsoleOutput(await ExecuteCode(code))}
+                            onClick={async (e) => SetConsoleOutput(await ExecuteCode(editorCode))}
                             className={styles.button}
                         >
                             Execute

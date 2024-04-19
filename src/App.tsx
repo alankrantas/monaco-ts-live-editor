@@ -13,15 +13,19 @@ function App() {
     return (
         <div>
             <div>
-                <h1>Monaco TypeScript Live Editor</h1>
+                <h1>Monaco TypeScript Live Editor (<a href="https://github.com/alankrantas/monaco-ts-live-editor" target="_blank">Github Repo</a>)</h1>
             </div>
             <div>
                 <Suspense
                     fallback={
-                        <div>Loading component...</div>
+                        <h4>Loading editor component...</h4>
                     }
                 >
-                    <MonacoEditor />
+                    <MonacoEditor
+                        code="console.log('Hello World!');"
+                        darkMode={true}
+                        strictMode={true}
+                    />
                 </Suspense>
             </div>
         </div>

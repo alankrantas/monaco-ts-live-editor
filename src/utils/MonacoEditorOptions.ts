@@ -1,3 +1,9 @@
+export interface MonacoEditorProps {
+    code?: string;
+    darkMode?: boolean;
+    strictMode?: boolean;
+}
+
 export const EditorOptions = {
     automaticLayout: true,
     contextmenu: true,
