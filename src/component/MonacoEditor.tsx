@@ -12,7 +12,7 @@ import styles from "../css/MonacoEditor.module.css";
 
 const MonacoEditor: FunctionComponent = () => {
     const monacoRef = useRef<any>(null);
-    const [code, setCode] = useState("");
+    const [code, setCode] = useState("console.log('Hello World!')");
     const [strictMode, setStrictMode] = useState(true);
     const [consoleOutput, SetConsoleOutput] = useState<string[]>([]);
     const [darkMode, setDarkMode] = useState(true);
