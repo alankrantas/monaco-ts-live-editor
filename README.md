@@ -1,8 +1,10 @@
 # Monaco TypeScript Live Editor
 
+> Try it [here](https://alankrantas.github.io/monaco-ts-live-editor/).
+
 A simple demonstration to configure [`@monaco-editor/react`](https://www.npmjs.com/package/@monaco-editor/react) into an online TypeScript editor component with IntelliSense support and can execute the script directly in browser using `ts.transpileModule()` and `eval()`.
 
-The React app is created/built by `Vite` and deployed to GitHub Pages using Github Actions (try it [here](https://alankrantas.github.io/monaco-ts-live-editor/)).
+The React app is [created/built by Vite](https://vitejs.dev/) and deployed to GitHub Pages using Github Actions.
 
 ## Development
 
