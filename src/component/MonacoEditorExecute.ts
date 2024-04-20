@@ -1,6 +1,6 @@
 import ts from "typescript";
 
-export const ExecuteCode = async (code: string): Promise<string[]> => {
+export const ExecuteCode = (code: string): string[] => {
     const consoleOutput: string[] = [];
 
     const consoleOriginal = console.log;
@@ -17,15 +17,15 @@ export const ExecuteCode = async (code: string): Promise<string[]> => {
         },
     }).outputText;
 
-    const transpiledCodeAsFunction = `(async () => {
-    return async () => {
+    const transpiledCodeAsFunction = `(() => {
+    return () => {
         ${transpiledCode}
     }
 })()`
 
     try {
-        const executeFunction: () => Promise<string[]> = await eval(transpiledCodeAsFunction);
-        await executeFunction();
+        const executeFunction: () => string[] = eval(transpiledCodeAsFunction);
+        executeFunction();
     } catch (e: any) {
         console.log(e.stack);
     } finally {

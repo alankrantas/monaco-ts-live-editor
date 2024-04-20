@@ -118,7 +118,7 @@ const MonacoEditor: FunctionComponent<MonacoEditorProps> = ({
                         </button>
                         &nbsp;
                         <button
-                            onClick={async (e) => setConsoleOutput(await ExecuteCode(editorCode))}
+                            onClick={(e) => setConsoleOutput(ExecuteCode(editorCode))}
                             className={styles.button}
                         >
                             Execute
