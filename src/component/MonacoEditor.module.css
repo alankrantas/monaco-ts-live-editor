@@ -9,7 +9,7 @@
 .grid {
     display: grid;
     grid-auto-flow: column;
-    grid-auto-columns: 60% 40%;
+    grid-auto-columns: 70% 30%;
 }
 
 .padded {
@@ -28,7 +28,6 @@
     font-size: 16px;
     text-align: center;
     cursor: pointer;
-    display: block;
     border: none;
     padding: 8px 8px;
     background-color: #D3D3D3;
@@ -37,4 +36,7 @@
 .code {
     font-family: "Courier";
     font-size: 16px;
+    text-wrap: wrap;
+    display: block;
+    background-color: #fdf5e6;
 }

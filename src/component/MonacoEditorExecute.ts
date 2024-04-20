@@ -26,9 +26,10 @@ export const ExecuteCode = async (code: string): Promise<string[]> => {
     try {
         const executeFunction: () => Promise<string[]> = await eval(transpiledCodeAsFunction);
         await executeFunction();
-        console.log(`----------------------------------------\n[end of execution: ${new Date().toLocaleString("en-us")}]`);
     } catch (e: any) {
-        console.log(`error: ${e.stack}`);
+        console.log(e.stack);
+    } finally {
+        console.log(`[editor:\nlast executed at\n${new Date().toLocaleString("en-us")}]`);
     }
 
     console.log = consoleOriginal;

@@ -1,14 +1,14 @@
 import {
     FunctionComponent,
-    useState,
     useEffect,
     useRef,
+    useState,
 } from "react";
 import Editor from "@monaco-editor/react";
 
-import { MonacoEditorProps, EditorOptions, GenerateCompilerOptions } from "../utils/MonacoEditorOptions";
-import { ExecuteCode } from "../utils/MonacoEditorExecute";
-import styles from "../css/MonacoEditor.module.css";
+import { MonacoEditorProps, EditorOptions, GenerateCompilerOptions } from "./MonacoEditorOptions";
+import { ExecuteCode } from "./MonacoEditorExecute";
+import styles from "./MonacoEditor.module.css";
 
 const MonacoEditor: FunctionComponent<MonacoEditorProps> = ({
     code = "",
@@ -19,7 +19,7 @@ const MonacoEditor: FunctionComponent<MonacoEditorProps> = ({
     const [editorCode, setEditorCode] = useState(code);
     const [editorDarkMode, setEditorDarkMode] = useState(darkMode);
     const [editorStrictMode, setEditorStrictMode] = useState(strictMode);
-    const [consoleOutput, SetConsoleOutput] = useState<string[]>([]);
+    const [consoleOutput, setConsoleOutput] = useState<string[]>([]);
 
     const setEditorCompileOptions = () => {
         if (monacoRef) {
@@ -36,6 +36,19 @@ const MonacoEditor: FunctionComponent<MonacoEditorProps> = ({
                     noSyntaxValidation: false,
                 },
             );
+            /*
+            You can also add a declaration file (.d.ts) of an external module
+            for IntelliSense to be able to support custom types:
+
+            fetch("/url/your-declaretion.d.ts")
+                .then(res => res.text())
+                .then(data => {
+                    const externalModule = `declare module ${your-module-name} { ${data} };`;
+                    monacoRef.current?.languages.typescript.typescriptDefaults.addExtraLib(
+                        externalModule,
+                    );
+            })
+            */
         }
     };
 
@@ -54,16 +67,15 @@ const MonacoEditor: FunctionComponent<MonacoEditorProps> = ({
                             onChange={() => setEditorDarkMode(!editorDarkMode)}
                             className={styles.checkbox}
                         />
-                        <span>&nbsp;Dark Mode</span>
-                    </div>
-                    <div className={styles.padded}>
+                        <span>Dark Mode</span>
+                        &nbsp;
                         <input
                             type="checkbox"
                             checked={editorStrictMode}
                             onChange={() => setEditorStrictMode(!editorStrictMode)}
                             className={styles.checkbox}
                         />
-                        <span>&nbsp;Strict IntelliSense Mode</span>
+                        <span>Strict IntelliSense Mode</span>
                     </div>
                     <div className={styles.padded}>
                         <Editor
@@ -86,16 +98,41 @@ const MonacoEditor: FunctionComponent<MonacoEditorProps> = ({
                 <div className={styles.padded}>
                     <div className={styles.padded}>
                         <button
-                            onClick={async (e) => SetConsoleOutput(await ExecuteCode(editorCode))}
+                            onClick={async (e) => {
+                                navigator.clipboard.writeText(editorCode);
+                                alert("Script copied!");
+                            }}
+                            className={styles.button}
+                        >
+                            Copy
+                        </button>
+                        &nbsp;
+                        <button
+                            onClick={async (e) => {
+                                if (window.confirm("Confirm clearing script?"))
+                                    setEditorCode("");
+                            }}
+                            className={styles.button}
+                        >
+                            Clear
+                        </button>
+                        &nbsp;
+                        <button
+                            onClick={async (e) => setConsoleOutput(await ExecuteCode(editorCode))}
                             className={styles.button}
                         >
                             Execute
                         </button>
                     </div>
                     <div className={styles.padded}>
-                        <pre className={styles.code}>
-                            {consoleOutput.join("\n")}
-                        </pre>
+                        {
+                            consoleOutput.map((log) => (
+                                <pre className={styles.code}>
+                                    <div className={styles.padded}>{log}</div>
+                                </pre>
+                            ))
+                        }
+
                     </div>
                 </div>
             </div>

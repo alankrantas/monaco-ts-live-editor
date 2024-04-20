@@ -1,0 +1,62 @@
+/// Monaco TypeScript Live Editor ///
+
+/*
+Tip:
+Use console.log() or alert() to print results.
+
+You can move cursor onto keywords
+or right click to bring up VS code menu.
+
+The editor enables auto-formatting
+but you can also do it manually with Shift + Alt + F.
+
+Be noted that the editor does not throw errors
+for TypeScript-related type checks
+(despite IntelliSense errors or warnings may show up).
+*/
+
+class Person {
+    constructor(public name: string, public city: string) { }
+}
+
+class Product {
+    constructor(public name: string, public price: number) { }
+}
+
+class DataCollection<T extends Person | Product> {
+    private items: T[] = [];
+
+    constructor(initialItems: T[]) {
+        this.items.push(...initialItems);
+    }
+
+    getNames(): string[] {
+        return this.items.map(item => {
+            if (item instanceof Person || item instanceof Product) {
+                return item.name;
+            } else {
+                return null;
+            }
+        });
+    }
+
+    getLength(): number {
+        return this.items.length;
+    }
+}
+
+let people = [
+    new Person("Bob Smith", "London"),
+    new Person("Dora Peters", "New York")
+];
+
+let products = [
+    new Product("Running Shoes", 100),
+    new Product("Hat", 25)
+];
+
+let personCollection = new DataCollection<Person>(people);
+let productCollection = new DataCollection<Product>(products);
+
+console.log(`person names: ${personCollection.getNames()}`);
+console.log(`number of products: ${productCollection.getLength()}`);

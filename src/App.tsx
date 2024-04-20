@@ -1,6 +1,8 @@
 import {
     lazy,
-    Suspense
+    Suspense,
+    useEffect,
+    useState
 } from "react";
 
 import "./App.css";
@@ -10,6 +12,12 @@ const MonacoEditor = lazy(
 );
 
 function App() {
+    const [editorCode, setEditorCode] = useState(`console.log("Hello World!");`);
+
+    useEffect(() => {
+        fetch("/monaco-ts-live-editor/exampleCode.txt").then(res => res.text()).then(data => setEditorCode(data));
+    }, []);
+
     return (
         <div>
             <div>
@@ -22,7 +30,7 @@ function App() {
                     }
                 >
                     <MonacoEditor
-                        code="console.log('Hello World!');"
+                        code={editorCode}
                         darkMode={true}
                         strictMode={true}
                     />
