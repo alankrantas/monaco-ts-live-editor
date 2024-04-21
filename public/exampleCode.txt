@@ -3,6 +3,7 @@
 /*
 Tip:
 Use console.log() or alert() to print results.
+Some global functions like `fetch()` may not work.
 
 You can move cursor onto keywords
 or right click to bring up VS code menu.

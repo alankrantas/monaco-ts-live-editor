@@ -10,26 +10,22 @@ export const ExecuteCode = (code: string): string[] => {
         );
     };
 
-    const transpiledCode = ts.transpileModule(code, {
+    const transpileOutput = ts.transpileModule(code, {
         compilerOptions: {
             target: ts.ScriptTarget.ESNext,
             module: ts.ModuleKind.ESNext,
         },
-    }).outputText;
+    });
 
-    const transpiledCodeAsFunction = `(() => {
-    return () => {
-        ${transpiledCode}
-    }
-})()`
+    transpileOutput.diagnostics?.forEach(item => console.log(item));
 
     try {
-        const executeFunction: () => string[] = eval(transpiledCodeAsFunction);
-        executeFunction();
+        const func = new Function(transpileOutput.outputText);
+        func();
     } catch (e: any) {
         console.log(e.stack);
     } finally {
-        console.log(`[editor:\nlast executed at\n${new Date().toLocaleString("en-us")}]`);
+        console.log(`[editor: last executed at\n${new Date().toLocaleString("en-us")}]`);
     }
 
     console.log = consoleOriginal;
