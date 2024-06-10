@@ -15,7 +15,7 @@ function App() {
     const [editorCode, setEditorCode] = useState(`console.log("Hello World!");`);
 
     useEffect(() => {
-        fetch("/monaco-ts-live-editor/exampleCode.txt").then(res => res.text()).then(data => setEditorCode(data));
+        fetch("/monaco-ts-live-editor/exampleCode.ts").then(res => res.text()).then(data => setEditorCode(data));
     }, []);
 
     return (
