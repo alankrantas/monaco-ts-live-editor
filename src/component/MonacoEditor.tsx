@@ -128,7 +128,7 @@ const MonacoEditor: FunctionComponent<MonacoEditorProps> = ({
                         {
                             consoleOutput.map((log) => (
                                 <pre className={styles.code}>
-                                    <div className={styles.padded}>{log}</div>
+                                    {log}
                                 </pre>
                             ))
                         }
