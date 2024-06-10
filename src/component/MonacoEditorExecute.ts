@@ -25,7 +25,7 @@ export const ExecuteCode = (code: string): string[] => {
     } catch (e: any) {
         console.log(e.stack);
     } finally {
-        console.log(`[editor: last executed at\n${new Date().toLocaleString("en-us")}]`);
+        console.log(`[editor: last executed at ${new Date().toLocaleString("en-us")}]`);
     }
 
     console.log = consoleOriginal;
