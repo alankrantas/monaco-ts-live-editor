@@ -126,8 +126,11 @@ const MonacoEditor: FunctionComponent<MonacoEditorProps> = ({
                                 setExecuting(false);
                             }}
                             className={styles.button}
+                            disabled={executing}
                         >
-                            Execute
+                            {
+                                executing ? "Executing..." : "Execute"
+                            }
                         </button>
                     </div>
                     <pre className={styles.code}>
