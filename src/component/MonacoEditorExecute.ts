@@ -1,14 +1,11 @@
 import ts from "typescript";
 
-export const ExecuteCode = (code: string): string[] => {
-    const consoleOutput: string[] = [];
+const consoleOriginal = console.log;
+let consoleOutput: string[] = [];
 
-    const consoleOriginal = console.log;
-    console.log = (...msg: any[]) => {
-        msg.forEach((m) =>
-            consoleOutput.push(formatConsoleLog(m)),
-        );
-    };
+export const ExecuteCode = async (code: string): Promise<string[]> => {
+    consoleOutput = [];
+    console.log = tmpConsoleLog;
 
     const transpileOutput = ts.transpileModule(code, {
         compilerOptions: {
@@ -17,15 +14,15 @@ export const ExecuteCode = (code: string): string[] => {
         },
     });
 
-    transpileOutput.diagnostics?.forEach(item => console.log(item));
+    transpileOutput.diagnostics?.forEach(item => tmpConsoleLog(item));
 
     try {
         const func = new Function(transpileOutput.outputText);
         func();
     } catch (e: any) {
-        console.log(e.stack);
+        tmpConsoleLog(e.stack);
     } finally {
-        console.log(`[editor: last executed at ${new Date().toLocaleString("en-us")}]`);
+        tmpConsoleLog(`[editor: last executed at ${new Date().toLocaleString("en-us")}]`);
     }
 
     console.log = consoleOriginal;
@@ -48,4 +45,10 @@ const formatConsoleLog = (msg: any): string => {
         }
     }
     return msgString;
+};
+
+const tmpConsoleLog = (...msg: any[]) => {
+    msg.forEach((m) =>
+        consoleOutput.push(formatConsoleLog(m)),
+    );
 };

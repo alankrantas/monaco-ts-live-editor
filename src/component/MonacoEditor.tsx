@@ -17,6 +17,7 @@ const MonacoEditor: FunctionComponent<MonacoEditorProps> = ({
 }) => {
     const monacoRef = useRef<any>(null);
     const [editorCode, setEditorCode] = useState(code);
+    const [executing, setExecuting] = useState(false);
     const [editorDarkMode, setEditorDarkMode] = useState(darkMode);
     const [editorStrictMode, setEditorStrictMode] = useState(strictMode);
     const [consoleOutput, setConsoleOutput] = useState<string[]>([]);
@@ -104,7 +105,7 @@ const MonacoEditor: FunctionComponent<MonacoEditorProps> = ({
                             }}
                             className={styles.button}
                         >
-                            Copy
+                            Copy Code
                         </button>
                         &nbsp;
                         <button
@@ -114,26 +115,28 @@ const MonacoEditor: FunctionComponent<MonacoEditorProps> = ({
                             }}
                             className={styles.button}
                         >
-                            Clear
+                            Clear Code
                         </button>
                         &nbsp;
                         <button
-                            onClick={(e) => setConsoleOutput(ExecuteCode(editorCode))}
+                            onClick={async (e) => {
+                                if (executing) return;
+                                setExecuting(true);
+                                setConsoleOutput(await ExecuteCode(editorCode));
+                                setExecuting(false);
+                            }}
                             className={styles.button}
                         >
                             Execute
                         </button>
                     </div>
-                    <div className={styles.padded}>
-                        {
-                            consoleOutput.map((log) => (
-                                <pre className={styles.code}>
-                                    {log}
-                                </pre>
-                            ))
-                        }
-
-                    </div>
+                    <pre className={styles.code}>
+                        <div className={styles.padded}>
+                            {
+                                consoleOutput.join("\n")
+                            }
+                        </div>
+                    </pre>
                 </div>
             </div>
         </div>
