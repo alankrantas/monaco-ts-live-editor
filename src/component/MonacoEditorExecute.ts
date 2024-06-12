@@ -31,18 +31,20 @@ export const ExecuteCode = async (code: string): Promise<string[]> => {
 
 const formatConsoleLog = (msg: any): string => {
     let msgString = "";
-    if (msg) {
-        if (Array.isArray(msg)) {
-            msgString = `[${msg.join(", ")}]`;
-        } else if (typeof msg == "object") {
-            try {
-                msgString = JSON.stringify(msg, null, 4);
-            } catch (e) {
-                msgString = String(msg);
-            }
-        } else {
-            msgString = String(msg);
+    if (Array.isArray(msg)) {
+        msgString = `[${
+            msg.map((item) => {
+                return formatConsoleLog(item);
+            }).join(", ")
+        }]`;
+    } else if (typeof msg == "object") {
+        try {
+            msgString = JSON.stringify(msg, null, 4);
+        } catch (e) {
+            msgString = `${msg}`;
         }
+    } else {
+        msgString = `${msg}`;
     }
     return msgString;
 };
