@@ -86,13 +86,9 @@ const MonacoEditor: FunctionComponent<MonacoEditorProps> = ({
                             language="typescript"
                             value={editorCode}
                             onMount={(editor, monaco) => {
-                                if (monaco) {
-                                    monacoRef.current = monaco;
-                                }
+                                if (monaco) monacoRef.current = monaco;
                             }}
-                            onChange={(value, e) => {
-                                setEditorCode(value ?? "");
-                            }}
+                            onChange={(value, e) => setEditorCode(value ?? "")}
                         />
                     </div>
                 </div>
