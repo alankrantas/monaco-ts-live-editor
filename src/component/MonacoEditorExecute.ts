@@ -1,11 +1,12 @@
 import ts from "typescript";
 
-const consoleOriginal = console.log;
 let consoleOutput: string[] = [];
 
 export const ExecuteCode = async (code: string): Promise<string[]> => {
+    const consoleOriginal = console.log;
+
     consoleOutput = [];
-    console.log = tmpConsoleLog;
+    console.log = consoleLog;
 
     const transpileOutput = ts.transpileModule(code, {
         compilerOptions: {
@@ -14,15 +15,14 @@ export const ExecuteCode = async (code: string): Promise<string[]> => {
         },
     });
 
-    transpileOutput.diagnostics?.forEach(item => tmpConsoleLog(item));
+    transpileOutput.diagnostics?.forEach(item => consoleLog(item));
 
     try {
-        const func = new Function(transpileOutput.outputText);
-        func();
+        (new Function(transpileOutput.outputText))();
     } catch (e: any) {
-        tmpConsoleLog(e.stack);
+        consoleLog(e.stack);
     } finally {
-        tmpConsoleLog(`[editor: last executed at ${new Date().toLocaleString("en-us")}]`);
+        consoleLog(`[editor: last executed at ${new Date().toLocaleString("en-us")}]`);
     }
 
     console.log = consoleOriginal;
@@ -32,11 +32,10 @@ export const ExecuteCode = async (code: string): Promise<string[]> => {
 const formatConsoleLog = (msg: any): string => {
     let msgString = "";
     if (Array.isArray(msg)) {
-        msgString = `[${
-            msg.map((item) => {
-                return formatConsoleLog(item);
-            }).join(", ")
-        }]`;
+        msgString = `[${msg.map((item) => {
+            return formatConsoleLog(item);
+        }).join(", ")
+            }]`;
     } else if (typeof msg == "object") {
         try {
             msgString = JSON.stringify(msg, null, 4);
@@ -49,7 +48,7 @@ const formatConsoleLog = (msg: any): string => {
     return msgString;
 };
 
-const tmpConsoleLog = (...msg: any[]) => {
+const consoleLog = (...msg: any[]) => {
     msg.forEach((m) =>
         consoleOutput.push(formatConsoleLog(m)),
     );
