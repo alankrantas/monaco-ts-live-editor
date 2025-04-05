@@ -8,6 +8,7 @@ When the "Strict Mode" is enabled, the TypeScript compiler would use the followi
 
 - `allowUnreachableCode`: `false`
 - `allowUnusedLabels`: `false`
+- `exactOptionalPropertyTypes`: `true`
 - `noFallthroughCasesInSwitch`: `true`
 - `noImplicitAny`: `true`
 - `noImplicitOverride`: `true`
@@ -18,6 +19,11 @@ When the "Strict Mode" is enabled, the TypeScript compiler would use the followi
 - `noUnusedLocals`: `true`
 - `noUnusedParameters`: `true`
 - `strict`: `true`
+- `strictBindCallApply`: `true`
+- `strictBuiltinIteratorReturn`: `true`
+- `strictFunctionTypes`: `true`
+- `strictNullChecks`: `true`
+- `strictPropertyInitialization`: `true`
 
 `checkJs` is set to `true` and `target`/`module` are set to `ESNext`.
 
