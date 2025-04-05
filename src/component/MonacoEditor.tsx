@@ -26,7 +26,7 @@ const MonacoEditor: FunctionComponent<MonacoEditorProps> = ({
         if (monacoRef) {
             monacoRef.current?.languages.typescript.typescriptDefaults.setCompilerOptions(
                 GenerateCompilerOptions(
-                    strictMode,
+                    editorStrictMode,
                     monacoRef.current?.languages.typescript.ScriptTarget.ESNext
                 ),
             );
@@ -58,7 +58,7 @@ const MonacoEditor: FunctionComponent<MonacoEditorProps> = ({
 
     useEffect(() => {
         setEditorCompileOptions();
-    }, [monacoRef, strictMode]);
+    }, [monacoRef, editorStrictMode]);
 
     return (
         <div className={styles.container}>

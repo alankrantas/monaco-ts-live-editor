@@ -28,13 +28,13 @@ class DataCollection<T extends Person | Product> {
     }
 
     getNames(): string[] {
-        return this.items.map(item => {
+        return this.items.filter(item => {
             if (item instanceof Person || item instanceof Product) {
-                return item.name;
+                return true;
             } else {
-                return null;
+                return false;
             }
-        });
+        }).map(item => item.name);
     }
 
     getLength(): number {
