@@ -15,7 +15,8 @@ function App() {
     return (
         <div>
             <div>
-                <h1>Monaco TypeScript Live Editor (<a href="https://github.com/alankrantas/monaco-ts-live-editor" target="_blank">Github Repo</a>)</h1>
+                <h1>Monaco TypeScript Live Editor</h1>
+                <h3>IntelliSense and in-browser execution for JavaScript/TypeScript (<a href="https://github.com/alankrantas/monaco-ts-live-editor" target="_blank" rel="noreferrer noopener">repo</a>)</h3>
             </div>
             <div>
                 <Suspense

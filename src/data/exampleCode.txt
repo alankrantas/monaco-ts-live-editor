@@ -4,6 +4,7 @@
 Tip:
 Use console.log() or alert() to print results.
 Auto-formatting and full IntelliSense enabled.
+The TypeScript compiler does not check types.
 
 Note: no additional packages/type definition supported
 and `fetch()` does not work.

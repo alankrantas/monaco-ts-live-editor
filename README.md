@@ -10,11 +10,7 @@ A simple demonstration to wrap [`@monaco-editor/react`](https://www.npmjs.com/pa
 
 Install dependencies.
 
-### `yarn upgrade-all`
-
-Upgrade all dependencies.
-
-### `yarn dev`
+### `yarn dev` or `yarn start`
 
 Start the dev server.
 
@@ -22,7 +18,7 @@ Start the dev server.
 
 Build a production at `./dist`.
 
-### `yarn preview`
+### `yarn preview` or `yarn serve`
 
 Serve and view the built production.
 

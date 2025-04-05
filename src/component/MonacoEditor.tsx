@@ -68,15 +68,15 @@ const MonacoEditor: FunctionComponent<MonacoEditorProps> = ({
                             onChange={() => setEditorDarkMode(!editorDarkMode)}
                             className={styles.checkbox}
                         />
-                        <span>Dark Mode</span>
-                        &nbsp;
+                        <span>&nbsp;Dark Mode</span>
+                        &nbsp;&nbsp;
                         <input
                             type="checkbox"
                             checked={editorStrictMode}
                             onChange={() => setEditorStrictMode(!editorStrictMode)}
                             className={styles.checkbox}
                         />
-                        <span>Strict IntelliSense Mode</span>
+                        <span>&nbsp;Strict Mode</span>
                     </div>
                     <div className={styles.padded}>
                         <Editor
