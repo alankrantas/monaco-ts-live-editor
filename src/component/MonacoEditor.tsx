@@ -38,13 +38,16 @@ const MonacoEditor: FunctionComponent<MonacoEditorProps> = ({
                 },
             );
             /*
-            You can also add a declaration file (.d.ts) of an external module
-            for IntelliSense to be able to support custom types:
+            You can also add declaration files (.d.ts) of an external module
+            for editor IntelliSense to recognize the custom types:
 
-            fetch("/url/your-declaretion.d.ts")
+            const url = "/url/your-module-declaretion.d.ts";
+            const moduleName = "your-module-name";
+
+            fetch(url)
                 .then(res => res.text())
                 .then(data => {
-                    const externalModule = `declare module ${your-module-name} { ${data} };`;
+                    const externalModule = `declare module ${moduleName} { ${data} };`;
                     monacoRef.current?.languages.typescript.typescriptDefaults.addExtraLib(
                         externalModule,
                     );
@@ -95,7 +98,7 @@ const MonacoEditor: FunctionComponent<MonacoEditorProps> = ({
                 <div className={styles.padded}>
                     <div className={styles.padded}>
                         <button
-                            onClick={async (e) => {
+                            onClick={async () => {
                                 navigator.clipboard.writeText(editorCode);
                                 alert("Script copied!");
                             }}
@@ -105,7 +108,7 @@ const MonacoEditor: FunctionComponent<MonacoEditorProps> = ({
                         </button>
                         &nbsp;
                         <button
-                            onClick={async (e) => {
+                            onClick={async () => {
                                 if (window.confirm("Confirm clearing script?"))
                                     setEditorCode("");
                             }}
@@ -115,7 +118,7 @@ const MonacoEditor: FunctionComponent<MonacoEditorProps> = ({
                         </button>
                         &nbsp;
                         <button
-                            onClick={async (e) => {
+                            onClick={async () => {
                                 if (executing) return;
                                 setExecuting(true);
                                 setConsoleOutput(await ExecuteCode(editorCode));

@@ -23,6 +23,7 @@ export const ExecuteCode = async (code: string): Promise<string[]> => {
         consoleLog(e.stack);
     } finally {
         consoleLog(`[editor: last executed at ${new Date().toLocaleString("en-us")}]`);
+        consoleLog(`[TS version: v${ts.version}]`);
     }
 
     console.log = consoleOriginal;
