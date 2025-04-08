@@ -4,7 +4,7 @@
 
 A simple demonstration to wrap [`@monaco-editor/react`](https://www.npmjs.com/package/@monaco-editor/react) into an online TypeScript editor component with IntelliSense support and script execution functionality. The React app is [created/built by Vite](https://vitejs.dev/) and deployed to GitHub Pages using Github Actions.
 
-When the "Strict Mode" is enabled, the TypeScript compiler would use the following configurations:
+When the "Strict Mode" is enabled, the Monaco editor would apply the following TypeScript rules for the IntelliSense:
 
 - `allowUnreachableCode`: `false`
 - `allowUnusedLabels`: `false`
