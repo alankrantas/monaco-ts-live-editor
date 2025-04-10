@@ -22,8 +22,7 @@ export const ExecuteCode = async (code: string): Promise<string[]> => {
     } catch (e: any) {
         consoleLog(e.stack);
     } finally {
-        consoleLog(`[editor: last executed at ${new Date().toLocaleString("en-us")}]`);
-        consoleLog(`[TS version: v${ts.version}]`);
+        consoleLog(`\n[editor (TypeScript v${ts.version}): ${new Date().toLocaleString("en-us")}]`);
     }
 
     console.log = consoleOriginal;
